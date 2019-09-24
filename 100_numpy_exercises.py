@@ -1,132 +1,169 @@
+# anything that you can assign to a variable is an expression, if or and for are all statements.
 
 # 100 numpy exercises
 
-This is a collection of exercises that have been collected in the numpy mailing
-list, on stack overflow and in the numpy documentation. I've also created some
-to reach the 100 limit. The goal of this collection is to offer a quick
-reference for both old and new users but also to provide a set of exercises for
-those who teach.
+# This is a collection of numpy exercises found on github.
 
-If you find an error or think you've a better way to solve some of them, feel
-free to open an issue at <https://github.com/rougier/numpy-100>
+
+# This is a collection of exercises that have been collected in the numpy mailing
+# list, on stack overflow and in the numpy documentation. I've also created some
+# to reach the 100 limit. The goal of this collection is to offer a quick
+# reference for both old and new users but also to provide a set of exercises for
+# those who teach.
+
 
 #### 1. Import the numpy package under the name `np` (★☆☆)
 
-
+import numpy as np
 
 #### 2. Print the numpy version and the configuration (★☆☆)
 
-
+print(np.version)
+print(np.__version__)
+np.show_config()
 
 #### 3. Create a null vector of size 10 (★☆☆)
 
-
+x = np.zeros(10)
 
 #### 4.  How to find the memory size of any array (★☆☆)
 
-
+"%d bytes" % (x.size * x.itemsize)
 
 #### 5.  How to get the documentation of the numpy add function from the command line? (★☆☆)
 
-
+python -c
+>>> import numpy
+>>> numpy.info(numpy.add)
 
 #### 6.  Create a null vector of size 10 but the fifth value which is 1 (★☆☆)
 
-
+null_vector = np.zeros(10)
+null_vector[4] = 1
+print(null_vector)
 
 #### 7.  Create a vector with values ranging from 10 to 49 (★☆☆)
 
-
+x = np.arange(10,50)
 
 #### 8.  Reverse a vector (first element becomes last) (★☆☆)
 
+np.flip(x)
+#or
+x[::-1]
 
-
-#### 9.  Create a 3x3 matrix with values ranging from 0 to 8 (★☆☆)
-
-
+#### 9.  Create a 3x3 matrix with values ranging from 0 to 8 (★☆☆
+# )
+x = np.arange(0,9)
+x.reshape(3,3)
 
 #### 10. Find indices of non-zero elements from \[1,2,0,0,4,0\] (★☆☆)
 
-
+x = np.array([1,2,0,0,4,0])
+np.nonzero(x)
 
 #### 11. Create a 3x3 identity matrix (★☆☆)
 
-
+x = np.ones(9)
+x.reshape(3,3)
 
 #### 12. Create a 3x3x3 array with random values (★☆☆)
 
-
+x = np.random.rand(3,3,3)
 
 #### 13. Create a 10x10 array with random values and find the minimum and maximum values (★☆☆)
 
-
+x = np.random.rand(10,10)
+x.min()
+x.max()
 
 #### 14. Create a random vector of size 30 and find the mean value (★☆☆)
 
-
+x = np.random.rand(30)
+x.mean()
 
 #### 15. Create a 2d array with 1 on the border and 0 inside (★☆☆)
 
-
+x = np.ones(12)
+x[4]=0
+x[7]=0
+x.reshape(4,3)
+# or
+x = np.ones((10,10))
+x[1:-1,1:-1] = 0
+print(x)
 
 #### 16. How to add a border (filled with 0's) around an existing array? (★☆☆)
 
-
+x = np.ones((5,5))
+x = np.pad(x, pad_width=0, mode='constant', constant_values=0)
 
 #### 17. What is the result of the following expression? (★☆☆)
 
 
 ```python
-0 * np.nan
-np.nan == np.nan
-np.inf > np.nan
-np.nan - np.nan
-np.nan in set([np.nan])
-0.3 == 3 * 0.1
+0 * np.nan # nan
+np.nan == np.nan # False
+np.inf > np.nan # False
+np.nan - np.nan # nan
+np.nan in set([np.nan]) # True
+0.3 == 3 * 0.1 # False
 ```
 
 #### 18. Create a 5x5 matrix with values 1,2,3,4 just below the diagonal (★☆☆)
 
-
+np.diag(1+np.arange(4), k=-1)
 
 #### 19. Create a 8x8 matrix and fill it with a checkerboard pattern (★☆☆)
 
-
+x = np.zeros((8,8),dtype=int)
+x[1::2,::2]=1
+x[::2,1::2]=1
+print(x)
 
 #### 20. Consider a (6,7,8) shape array, what is the index (x,y,z) of the 100th element?
 
-
+x = np.arange(1,337)
+new = x.reshape(6,7,8)
+new[1][5][3]
+# or
+print(np.unravel_index(99,(6,7,8)))
 
 #### 21. Create a checkerboard 8x8 matrix using the tile function (★☆☆)
 
-
+np.tile(np.array([[0,1],[1,0]]), (4,4))
 
 #### 22. Normalize a 5x5 random matrix (★☆☆)
 
-
+x = np.random.random((5,5))
+np.linalg.eig(x)
 
 #### 23. Create a custom dtype that describes a color as four unsigned bytes (RGBA) (★☆☆)
 
-
+color = np.dtype([("r", np.ubyte, 1),
+                  ("g", np.ubyte, 1),
+                  ("b", np.ubyte, 1),
+                  ("a", np.ubyte, 1)])
 
 #### 24. Multiply a 5x3 matrix by a 3x2 matrix (real matrix product) (★☆☆)
 
-
+np.dot(np.random.rand(5,3), np.random.rand(3,2))
 
 #### 25. Given a 1D array, negate all elements which are between 3 and 8, in place. (★☆☆)
 
-
+x = np.random.random(9)
+x[(3 < x) & (x <= 8)] *= -1
+print(x)
 
 #### 26. What is the output of the following script? (★☆☆)
 
 
 ```python
 # Author: Jake VanderPlas
-
-print(sum(range(5),-1))
-from numpy import *
-print(sum(range(5),-1))
+import numpy as np
+print(sum(range(5),-1)) # 9
+from numpy import * 
+print(sum(range(5),-1)) # 10
 ```
 
 #### 27. Consider an integer vector Z, which of these expressions are legal? (★☆☆)
@@ -146,38 +183,56 @@ Z<Z>Z
 
 ```python
 np.array(0) / np.array(0)
+# nan
+
 np.array(0) // np.array(0)
+# 0
+
 np.array([np.nan]).astype(int).astype(float)
+# array([-9.22337204e+18])
+
 ```
 
 #### 29. How to round away from zero a float array ? (★☆☆)
 
-
+x = np.random.uniform(-10,+10,10)
+print(np.copysign(np.ceil(np.abs(x)), x))
 
 #### 30. How to find common values between two arrays? (★☆☆)
 
-
+x1 = np.random.randint(0,10,10)
+x2 = np.random.randint(0,10,10)
+print(np.intersect1d(x1,x2))
 
 #### 31. How to ignore all numpy warnings (not recommended)? (★☆☆)
 
-
+np.seterr(divide='ignore', invalid='ignore')
+# or
+with np.errstate(divide='ignore', invalid='ignore'):
+    # insert code here
 
 #### 32. Is the following expressions true? (★☆☆)
-
+# No, it is false
 
 ```python
-np.sqrt(-1) == np.emath.sqrt(-1)
+np.sqrt(-1) == np.emath.sqrt(-1) # False
 ```
 
 #### 33. How to get the dates of yesterday, today and tomorrow? (★☆☆)
 
-
+yesterday = np.datetime64('today', 'D') - np.timedelta64(1, 'D')
+print("Yestraday: ",yesterday)
+today = np.datetime64('today', 'D')
+print("Today: ",today)
+tomorrow  = np.datetime64('today', 'D') + np.timedelta64(1, 'D')
+print("Tomorrow: ",tomorrow)
 
 #### 34. How to get all the dates corresponding to the month of July 2016? (★★☆)
 
+all_dates_from_july_2016 = np.arange('2016-07', '2016-08', dtype='datetime64[D]')
+print(all_dates_from_july_2016)
 
-
-#### 35. How to compute ((A+B)\*(-A/2)) in place (without copy)? (★★☆)
+#### 35. How to compute ((A+B)*(-A/2)) in place (without copy)? (★★☆)
 
 
 
